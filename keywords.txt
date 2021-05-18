@@ -6,10 +6,8 @@
 # Datatypes (KEYWORD1)
 #######################################
 
-modelBEncondeSTM32		KEYWORD1
-
+modelBEncodeSTM32		KEYWORD1
 encode_header_ptr_stm		KEYWORD1
-
 GPGGA		KEYWORD1
 GPRMC		KEYWORD1
 OCRC1		KEYWORD1

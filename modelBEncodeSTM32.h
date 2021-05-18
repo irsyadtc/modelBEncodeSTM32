@@ -1,12 +1,12 @@
-#ifndef modelBEncondeSTM32_h
-#define modelBEncondeSTM32_h
+#ifndef modelBEncodeSTM32_h
+#define modelBEncodeSTM32_h
 
 #include "Arduino.h"
 
-class modelBEncondeSTM32
+class modelBEncodeSTM32
 {
   public:
-    modelBEncondeSTM32();
+    modelBEncodeSTM32();
     bool encode(char const* b);
     String getHeader(void);
     uint8_t parse(char const* b, uint8_t sz);

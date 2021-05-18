@@ -1,6 +1,6 @@
-#include "modelBEncondeSTM32.h"
+#include "modelBEncodeSTM32.h"
 
-modelBEncondeSTM32::modelBEncondeSTM32()
+modelBEncodeSTM32::modelBEncodeSTM32()
 {
 
 }
@@ -9,7 +9,7 @@ modelBEncondeSTM32::modelBEncondeSTM32()
 /**************************************
    Encode
  **************************************/
-bool modelBEncondeSTM32::encode(char const* _buf)
+bool modelBEncodeSTM32::encode(char const* _buf)
 {
     bool valid = false;
     char *sntc = strchr(_buf,'$');
@@ -52,9 +52,9 @@ bool modelBEncondeSTM32::encode(char const* _buf)
 /***********************************
   getHeader()
 ***********************************/
-String modelBEncondeSTM32::getHeader(void)
+String modelBEncodeSTM32::getHeader(void)
 {
-    return String(encode_header_ptr_esp);
+    return String(encode_header_ptr_stm);
 }
 
 
@@ -64,11 +64,11 @@ String modelBEncondeSTM32::getHeader(void)
 /***********************************
   GPGGA
 ***********************************/
-void modelBEncondeSTM32::GPGGAThread(char *tok)
+void modelBEncodeSTM32::GPGGAThread(char *tok)
 {
     memset(GPGGA.parameter,0,sizeof GPGGA.parameter);
     //point to header
-    encode_header_ptr_esp = tok;
+    encode_header_ptr_stm = tok;
     //capture parameter
     uint8_t count=0;
     do
@@ -86,59 +86,59 @@ void modelBEncondeSTM32::GPGGAThread(char *tok)
 
 }
 
-String modelBEncondeSTM32::getUtcTime(void)
+String modelBEncodeSTM32::getUtcTime(void)
 {
 	return UTCTime;
 }
-String modelBEncondeSTM32::getLat(void)
+String modelBEncodeSTM32::getLat(void)
 {
 	return Lat;
 }
-String modelBEncondeSTM32::getNSInd(void)
+String modelBEncodeSTM32::getNSInd(void)
 {
 	return NSInd;
 }
-String modelBEncondeSTM32::getLong(void)
+String modelBEncodeSTM32::getLong(void)
 {
 	return Long;
 }
-String modelBEncondeSTM32::getEWInd(void)
+String modelBEncodeSTM32::getEWInd(void)
 {
 	return EWInd;
 }
-int modelBEncondeSTM32::getPosFix(void)
+int modelBEncodeSTM32::getPosFix(void)
 {
 	return GPGGA.parameter[5];
 }
-int modelBEncondeSTM32::getSatellites(void)
+int modelBEncodeSTM32::getSatellites(void)
 {
 	return GPGGA.parameter[6];
 }
-String modelBEncondeSTM32::getHDOP(void)
+String modelBEncodeSTM32::getHDOP(void)
 {
 	return GPGGA.parameter[7];
 }
-String modelBEncondeSTM32::getMSLAlt(void)
+String modelBEncodeSTM32::getMSLAlt(void)
 {
 	return GPGGA.parameter[8];
 }
-String modelBEncondeSTM32::getUnitMSL(void)
+String modelBEncodeSTM32::getUnitMSL(void)
 {
 	return GPGGA.parameter[9];
 }
-String modelBEncondeSTM32::getGeoidSep(void)
+String modelBEncodeSTM32::getGeoidSep(void)
 {
 	return GPGGA.parameter[10];
 }
-String modelBEncondeSTM32::getUnitGeoid(void)
+String modelBEncodeSTM32::getUnitGeoid(void)
 {
 	return GPGGA.parameter[11];
 }
-String modelBEncondeSTM32::getAgeDiffCorr(void)
+String modelBEncodeSTM32::getAgeDiffCorr(void)
 {
 	return GPGGA.parameter[12];
 }
-String modelBEncondeSTM32::getDiffRefSta(void)
+String modelBEncodeSTM32::getDiffRefSta(void)
 {
 	return GPGGA.parameter[13];
 }
@@ -147,11 +147,11 @@ String modelBEncondeSTM32::getDiffRefSta(void)
 /***********************************
    GPRMC
  ***********************************/
-void modelBEncondeSTM32::GPRMCThread(char *tok)
+void modelBEncodeSTM32::GPRMCThread(char *tok)
 {
      memset(GPRMC.parameter,0,sizeof GPRMC.parameter);
      //point to header
-     encode_header_ptr_esp = tok;
+     encode_header_ptr_stm = tok;
      //capture parameter
      uint8_t count=0;
      do
@@ -168,22 +168,22 @@ void modelBEncondeSTM32::GPRMCThread(char *tok)
      EWInd = String(GPRMC.parameter[5]);
 }
 
-String modelBEncondeSTM32::getStatus(void){
+String modelBEncodeSTM32::getStatus(void){
 	return String(GPRMC.parameter[1]);
 }
-String modelBEncondeSTM32::getSpdOGnd(void){
+String modelBEncodeSTM32::getSpdOGnd(void){
 	return String(GPRMC.parameter[6]);
 }
-String modelBEncondeSTM32::getCourOGnd(void){
+String modelBEncodeSTM32::getCourOGnd(void){
 	return String(GPRMC.parameter[7]);
 }
-String modelBEncondeSTM32::getDate(void){
+String modelBEncodeSTM32::getDate(void){
 	return String(GPRMC.parameter[8]);
 }
-String modelBEncondeSTM32::getMagnetVar(void){
+String modelBEncodeSTM32::getMagnetVar(void){
 	return String(GPRMC.parameter[9]);
 }
-String modelBEncondeSTM32::getMode(void){
+String modelBEncodeSTM32::getMode(void){
 	return String(GPRMC.parameter[10]);
 }
 
@@ -193,10 +193,10 @@ String modelBEncondeSTM32::getMode(void){
 /***********************************
    OCRC1
  ***********************************/
-void modelBEncondeSTM32::OCRC1Thread(char *tok)
+void modelBEncodeSTM32::OCRC1Thread(char *tok)
 {
     memset(OCRC1.parameter,0,sizeof OCRC1.parameter);
-    encode_header_ptr_esp = tok;
+    encode_header_ptr_stm = tok;
     uint8_t count=0;
     do
     {
@@ -206,25 +206,25 @@ void modelBEncondeSTM32::OCRC1Thread(char *tok)
     }while(count<OCRC1.size);
 }
 
-int modelBEncondeSTM32::getPowerB(void){
+int modelBEncodeSTM32::getPowerB(void){
 	return OCRC1.parameter[0];
 }
-int modelBEncondeSTM32::getHornB(void){
+int modelBEncodeSTM32::getHornB(void){
 	return OCRC1.parameter[1];
 }
-int modelBEncondeSTM32::getSpdUp(void){
+int modelBEncodeSTM32::getSpdUp(void){
 	return OCRC1.parameter[2];
 }
-int modelBEncondeSTM32::getSpdDwn(void){
+int modelBEncodeSTM32::getSpdDwn(void){
 	return OCRC1.parameter[3];
 }
-int modelBEncondeSTM32::getRgbR(void){
+int modelBEncodeSTM32::getRgbR(void){
 	return OCRC1.parameter[4];
 }
-int modelBEncondeSTM32::getRgbG(void){
+int modelBEncodeSTM32::getRgbG(void){
 	return OCRC1.parameter[5];
 }
-int modelBEncondeSTM32::getRgbB(void){
+int modelBEncodeSTM32::getRgbB(void){
 	return OCRC1.parmeter[6]
 }
 
@@ -232,7 +232,7 @@ int modelBEncondeSTM32::getRgbB(void){
 /***********************************
    Checksum
  ***********************************/
-bool modelBEncondeSTM32::checksum(char const* _buf)
+bool modelBEncodeSTM32::checksum(char const* _buf)
 {
   bool valid = false;
   uint8_t index;

@@ -15,16 +15,16 @@ This is a library dedicated to encode the content of NMEA messages receives by S
  - OpenCR 1.0
 
 
-##Methods
+## Methods
 
-###From GPS
-####void GPGGAThread(char *tok); 
+### From GPS
+#### void GPGGAThread(char *tok); 
 This method encodes GPGGA contents
 
-####void GPRMCThread(char *tok);
+#### void GPRMCThread(char *tok);
 This method encodes GPRMC contents
 
-####GPGGA
+#### GPGGA
 - String getUtcTime(void);
 - String getLat(void);
 - String getNSInd(void);
@@ -40,7 +40,7 @@ This method encodes GPRMC contents
 - String getAgeDiffCorr(void);
 - String getDiffRefSta(void);
 
-####GPRMC
+#### GPRMC
 UTC time, latitude, north-south indicator, longitude, east-west indicator get methods for GPRMC are the same with GPGGA
 - String getStatus(void);
 - String getSpdOGnd(void);
@@ -49,8 +49,8 @@ UTC time, latitude, north-south indicator, longitude, east-west indicator get me
 - String getMagnetVar(void);
 - String getMode(void);
 
-###from OpenCR
-####void OCRC1Thread(char *tok);
+### from OpenCR
+#### void OCRC1Thread(char *tok);
 This method encodes OCRC1 contents
 
 - int getPowerB(void);
