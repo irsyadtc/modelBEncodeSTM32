@@ -1,0 +1,63 @@
+#######################################
+# Syntax Coloring Map for modelBEncodeSTM32
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+modelBEncondeSTM32		KEYWORD1
+
+encode_header_ptr_stm		KEYWORD1
+
+GPGGA		KEYWORD1
+GPRMC		KEYWORD1
+OCRC1		KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+encode			KEYWORD2
+getHeader		KEYWORD2
+parse			KEYWORD2
+
+GPGGAThread     	KEYWORD2
+GPRMCThread		KEYWORD2
+getUtcTime		KEYWORD2
+getLat  	KEYWORD2
+getNSInd		KEYWORD2
+getLong	KEYWORD2
+
+getEWInd		KEYWORD2
+getPosFix		KEYWORD2
+getSatellites		KEYWORD2
+getHDOP		KEYWORD2
+getMSLAlt		KEYWORD2
+getUnitMSL		KEYWORD2
+getGeoidSep		KEYWORD2
+getUnitGeoid		KEYWORD2
+getAgeDiffCorr		KEYWORD2
+getDiffRefSta		KEYWORD2
+getStatus		KEYWORD2
+getSpdOGnd		KEYWORD2
+getCourOGnd		KEYWORD2
+getDate		KEYWORD2
+getMagnetVar		KEYWORD2
+getMode		KEYWORD2
+
+OCRC1Thread		KEYWORD2
+getPowerB		KEYWORD2
+getHornB		KEYWORD2
+getSpdUp		KEYWORD2
+getSpdDwn		KEYWORD2
+getRgbR		KEYWORD2
+getRgbG		KEYWORD2
+getRgbB		KEYWORD2
+	
+checksum		KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
