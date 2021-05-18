@@ -23,8 +23,8 @@ class modelBEncodeSTM32
     String getNSInd(void);		//r
     String getLong(void);		//r
     String getEWInd(void);		//r
-    int getPosFix(void);
-    int getSatellites(void);
+    String getPosFix(void);
+    String getSatellites(void);
     String getHDOP(void);
     String getMSLAlt(void);
     String getUnitMSL(void);

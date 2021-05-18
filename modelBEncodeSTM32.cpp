@@ -106,11 +106,11 @@ String modelBEncodeSTM32::getEWInd(void)
 {
 	return EWInd;
 }
-int modelBEncodeSTM32::getPosFix(void)
+String modelBEncodeSTM32::getPosFix(void)
 {
 	return GPGGA.parameter[5];
 }
-int modelBEncodeSTM32::getSatellites(void)
+String modelBEncodeSTM32::getSatellites(void)
 {
 	return GPGGA.parameter[6];
 }
@@ -207,25 +207,25 @@ void modelBEncodeSTM32::OCRC1Thread(char *tok)
 }
 
 int modelBEncodeSTM32::getPowerB(void){
-	return OCRC1.parameter[0];
+	return atoi(OCRC1.parameter[0]);
 }
 int modelBEncodeSTM32::getHornB(void){
-	return OCRC1.parameter[1];
+	return atoi(OCRC1.parameter[1]);
 }
 int modelBEncodeSTM32::getSpdUp(void){
-	return OCRC1.parameter[2];
+	return atoi(OCRC1.parameter[2]);
 }
 int modelBEncodeSTM32::getSpdDwn(void){
-	return OCRC1.parameter[3];
+	return atoi(OCRC1.parameter[3]);
 }
 int modelBEncodeSTM32::getRgbR(void){
-	return OCRC1.parameter[4];
+	return atoi(OCRC1.parameter[4]);
 }
 int modelBEncodeSTM32::getRgbG(void){
-	return OCRC1.parameter[5];
+	return atoi(OCRC1.parameter[5]);
 }
 int modelBEncodeSTM32::getRgbB(void){
-	return OCRC1.parmeter[6]
+	return atoi(OCRC1.parameter[6]);
 }
 
 
