@@ -29,9 +29,13 @@ bool modelBEncodeSTM32::encode(char const* _buf)
             {
                 GPGGAThread(tok);
             }
-            if(strcmp(tok,"GPRMC") == 0)
+            else if(strcmp(tok,"GPRMC") == 0)
             {
                 GPRMCThread(tok);
+            }
+            else if(strcmp(tok,"GPGLL") == 0)
+            {
+            	GPGLLThread(tok);
             }
             else if(strcmp(tok,"OCRC1") == 0)
             {
@@ -166,10 +170,11 @@ void modelBEncodeSTM32::GPRMCThread(char *tok)
      NSInd = String(GPRMC.parameter[3]);
      Long = String(GPRMC.parameter[4]);
      EWInd = String(GPRMC.parameter[5]);
+     Status = String(GPRMC.parameter[1]);
 }
 
 String modelBEncodeSTM32::getStatus(void){
-	return String(GPRMC.parameter[1]);
+	return Status;
 }
 String modelBEncodeSTM32::getSpdOGnd(void){
 	return String(GPRMC.parameter[6]);
@@ -185,6 +190,32 @@ String modelBEncodeSTM32::getMagnetVar(void){
 }
 String modelBEncodeSTM32::getMode(void){
 	return String(GPRMC.parameter[10]);
+}
+
+/***********************************
+   GPGLL
+ ***********************************/
+ void modelBEncodeSTM32::GPGLLThread(char *tok)
+{
+    memset(GPGLL.parameter,0,sizeof GPGLL.parameter);
+    //point to header
+    encode_header_ptr_stm = tok;
+    //capture parameter
+    uint8_t count=0;
+    do
+    {
+        tok = strtok(NULL,",*");
+        GPGLL.parameter[count] = tok;
+        count++;
+    }while(count<GPGLL.size);
+
+    Lat = String(GPGLL.parameter[0]);
+    NSInd = String(GPGLL.parameter[1]);
+    Long = String(GPGLL.parameter[2]);
+    EWInd = String(GPGLL.parameter[3]);
+    UTCTime = String(GPGLL.parameter[4]);
+    Status = String(GPGLL.parameter[5]);
+
 }
 
 /***********************************

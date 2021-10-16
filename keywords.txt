@@ -10,6 +10,7 @@ modelBEncodeSTM32		KEYWORD1
 encode_header_ptr_stm		KEYWORD1
 GPGGA		KEYWORD1
 GPRMC		KEYWORD1
+GPGLL		KEYWORD1
 OCRC1		KEYWORD1
 
 #######################################
