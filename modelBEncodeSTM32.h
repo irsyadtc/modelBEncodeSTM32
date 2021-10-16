@@ -16,6 +16,7 @@ class modelBEncodeSTM32
     // the modelAEncode libraries due to redundant parameters from different message ID
     void GPGGAThread(char *tok);
     void GPRMCThread(char *tok);
+    void GPGLLThread(char *tok);
 
     //GPGGA
     String getUtcTime(void);	//r
@@ -41,6 +42,9 @@ class modelBEncodeSTM32
 	String getMagnetVar(void);
 	String getMode(void);
 
+	//GPGLL
+	//redundant with gprmc
+
     //from OpenCR
 	void OCRC1Thread(char *tok);
 	int getPowerB(void);
@@ -60,6 +64,7 @@ class modelBEncodeSTM32
     String NSInd;
     String Long;
     String EWInd;
+    String Status;
 
     //from gps //////////////////
     struct gpgga
@@ -73,6 +78,12 @@ class modelBEncodeSTM32
       uint8_t size = 11;
       char *parameter[11];
     };
+    
+    struct gpgll
+    {
+    	uint8_t size = 6;
+    	char *parameter[6];
+    };
 
     //from openCR /////////////////////
     struct ocrc1
@@ -83,6 +94,7 @@ class modelBEncodeSTM32
 
     gpgga GPGGA;
     gprmc GPRMC;
+    gpgll GPGLL;
     ocrc1 OCRC1;
 
 };

@@ -24,6 +24,9 @@ This method encodes GPGGA contents
 #### void GPRMCThread(char *tok);
 This method encodes GPRMC contents
 
+#### void GPGLLhread(char *tok);
+This method encodes GPGLL contents
+
 #### GPGGA
 - String getUtcTime(void);
 - String getLat(void);
@@ -48,6 +51,8 @@ UTC time, latitude, north-south indicator, longitude, east-west indicator get me
 - String getDate(void);
 - String getMagnetVar(void);
 - String getMode(void);
+
+### GPGLL
 
 ### from OpenCR
 #### void OCRC1Thread(char *tok);
