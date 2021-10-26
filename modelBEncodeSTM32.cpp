@@ -24,7 +24,7 @@ bool modelBEncodeSTM32::encode(char const* _buf)
         if(valid)
         {
             char *tok = strtok(sntc,"$,"); //capture header
-
+/*
             if(strcmp(tok,"GPGGA") == 0)
             {
                 GPGGAThread(tok);
@@ -40,6 +40,12 @@ bool modelBEncodeSTM32::encode(char const* _buf)
             else if(strcmp(tok,"OCRC1") == 0)
             {
                 OCRC1Thread(tok);
+            }
+*/
+
+		if(strcmp(tok,"GPGLL") == 0)
+            {
+            	GPGLLThread(tok);
             }
 
             valid = true;
@@ -209,7 +215,9 @@ String modelBEncodeSTM32::getMode(void){
         count++;
     }while(count<GPGLL.size);
 
-    Lat = String(GPGLL.parameter[0]);
+    //verify & store value
+    Lat = verifyLat(GPGLL.parameter[0]);
+    //Lat = String(GPGLL.parameter[0]);
     NSInd = String(GPGLL.parameter[1]);
     Long = String(GPGLL.parameter[2]);
     EWInd = String(GPGLL.parameter[3]);
@@ -218,6 +226,72 @@ String modelBEncodeSTM32::getMode(void){
 
 }
 
+/***********************************
+   for verify
+ ***********************************/
+ uint8_t modelBEncodeSTM32::getParameterSize(char *tok)
+ {
+ 	uint8_t size_ = 0;
+  for(uint8_t i=0; i<150; i++)
+  {
+    if(tok[i]==0)
+    {
+      size_ = i;
+      break;
+    }
+  }
+  return size_;
+ }
+
+String modelBEncodeSTM32::verifyLat(char *tok)
+ {
+ 	//String temp = String(tok);
+ 	float lat_ = String(tok).toFloat();
+
+ 	if(lat_ != 0)
+    {
+        //valid
+        return String(tok);
+    }
+    else
+        {
+        return Lat;
+    }
+// 	uint8_t size_ = getParameterSize(tok); //get size first
+// 	bool verify = false;
+// 	for(uint8_t i=0; i< size_; i++) //verify tok is digit or '.'
+// 	{
+// 		if(isDigit(tok[i]) || (tok[i] == '.'))
+// 			verify = true;
+// 		else
+// 		{
+// 			verify = false;
+// 			break;
+// 		}
+// 	}
+
+// 	if(verify)
+// 		return String(tok);
+// 	else
+// 	 return Lat;
+ }
+
+
+ String modelBEncodeSTM32::verifyLong(char *tok)
+ {
+ 	float lat_ = String(tok).toFloat();
+
+ 	if(lat_ != 0)
+    {
+        //valid
+        return String(tok);
+    }
+    else
+        {
+        return Long;
+    }
+
+ }
 /***********************************
    from OpenCR
  ***********************************/

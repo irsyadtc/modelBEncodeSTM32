@@ -78,7 +78,7 @@ class modelBEncodeSTM32
       uint8_t size = 11;
       char *parameter[11];
     };
-    
+
     struct gpgll
     {
     	uint8_t size = 6;
@@ -96,6 +96,11 @@ class modelBEncodeSTM32
     gprmc GPRMC;
     gpgll GPGLL;
     ocrc1 OCRC1;
+
+
+    uint8_t getParameterSize(char *tok);
+    String verifyLat(char *tok);
+    String verifyLong(char *tok);
 
 };
 
