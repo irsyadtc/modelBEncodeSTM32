@@ -71,3 +71,24 @@ This method encodes OCRC1 contents
  - 
  - 
 
+## STM32-OpenCR messages
+### Transmit
+Message | Description |
+--------|-------------|
+enc,1,2,3,4 | Encoder message
+| 1: Right encoder instantaneous tick
+| 2: Left encoder instantaneous tick
+| 3: Right encoder accumulated tick
+| 4: Left encoder accumulated tick
+|
+gps,1,2,3,4 | GPS latitude and longitude message
+| 1: Latitude DDMM.MMMM (e.g. 4124.8963 = 41d 24.8963')
+| 2: North-south indicator
+| 3: Longitude DDDMM.MMMM (e.g. 08151.6838 = 81d 51.6838')
+| 4: East-west indicator
+
+### Receive
+Message | Description |
+--------|-------------|
+reset | reset encoder
+

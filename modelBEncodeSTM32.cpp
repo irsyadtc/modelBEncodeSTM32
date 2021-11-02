@@ -2,7 +2,10 @@
 
 modelBEncodeSTM32::modelBEncodeSTM32()
 {
-
+    Lat = "0";
+    NSInd = "0";
+    Long = "0";
+    EWInd = "0";
 }
 
 
@@ -219,7 +222,8 @@ String modelBEncodeSTM32::getMode(void){
     Lat = verifyLat(GPGLL.parameter[0]);
     //Lat = String(GPGLL.parameter[0]);
     NSInd = String(GPGLL.parameter[1]);
-    Long = String(GPGLL.parameter[2]);
+    Long = verifyLong(GPGLL.parameter[2]);
+    //Long = String(GPGLL.parameter[2]);
     EWInd = String(GPGLL.parameter[3]);
     UTCTime = String(GPGLL.parameter[4]);
     Status = String(GPGLL.parameter[5]);
@@ -245,7 +249,6 @@ String modelBEncodeSTM32::getMode(void){
 
 String modelBEncodeSTM32::verifyLat(char *tok)
  {
- 	//String temp = String(tok);
  	float lat_ = String(tok).toFloat();
 
  	if(lat_ != 0)
