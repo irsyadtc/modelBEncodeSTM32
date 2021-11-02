@@ -45,6 +45,7 @@ getDate		KEYWORD2
 getMagnetVar		KEYWORD2
 getMode		KEYWORD2
 
+resetThread		KEYWORD2
 OCRC1Thread		KEYWORD2
 getPowerB		KEYWORD2
 getHornB		KEYWORD2

@@ -7,7 +7,8 @@ class modelBEncodeSTM32
 {
   public:
     modelBEncodeSTM32();
-    bool encode(char const* b);
+    bool encodeGPS(char const* b);
+    bool encodeOCR(char const* b);
     String getHeader(void);
     uint8_t parse(char const* b, uint8_t sz);
 
@@ -55,7 +56,9 @@ class modelBEncodeSTM32
 	int getRgbG(void);
 	int getRgbB(void);
 
+    void resetThread(char *tok);
     bool checksum(char const* _buf);
+
 
   private:
     char *encode_header_ptr_stm;
@@ -92,6 +95,7 @@ class modelBEncodeSTM32
         char *parameter[7];
     };
 
+    ///////////////////////////////////
     gpgga GPGGA;
     gprmc GPRMC;
     gpgll GPGLL;

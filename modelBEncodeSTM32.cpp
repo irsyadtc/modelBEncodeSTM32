@@ -12,7 +12,7 @@ modelBEncodeSTM32::modelBEncodeSTM32()
 /**************************************
    Encode
  **************************************/
-bool modelBEncodeSTM32::encode(char const* _buf)
+bool modelBEncodeSTM32::encodeGPS(char const* _buf)
 {
     bool valid = false;
     char *sntc = strchr(_buf,'$');
@@ -298,6 +298,30 @@ String modelBEncodeSTM32::verifyLat(char *tok)
 /***********************************
    from OpenCR
  ***********************************/
+
+ /**************************************
+   Encode
+ **************************************/
+bool modelBEncodeSTM32::encodeOCR(char const* _buf)
+{
+    bool valid = false;
+    char *sntc= (char*)_buf;
+
+    if(sntc)
+    {
+        //capture full sentence
+        char *tok = strtok(sntc,"\r\n");
+
+        		if(strcmp(tok,"reset") == 0)
+            {
+            	resetThread(tok);
+            }
+
+    }
+    return valid;
+
+}
+
 /***********************************
    OCRC1
  ***********************************/
@@ -334,6 +358,14 @@ int modelBEncodeSTM32::getRgbG(void){
 }
 int modelBEncodeSTM32::getRgbB(void){
 	return atoi(OCRC1.parameter[6]);
+}
+
+/***********************************
+   reset
+ ***********************************/
+void modelBEncodeSTM32::resetThread(char *tok)
+{
+    encode_header_ptr_stm = tok;
 }
 
 
@@ -390,4 +422,5 @@ bool modelBEncodeSTM32::checksum(char const* _buf)
 
   return valid;
 }
+
 
