@@ -85,14 +85,14 @@ class modelBEncodeSTM32
     struct gpgll
     {
     	uint8_t size = 6;
-    	char *parameter[6];
+    	char parameter[6][12];
     };
 
     //from openCR /////////////////////
     struct ocrc1
     {
         uint8_t size = 7;
-        char *parameter[7];
+        char parameter[7][10];
     };
 
     ///////////////////////////////////

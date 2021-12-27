@@ -1,5 +1,5 @@
 ############################################################
-#	Model B Encode NMEA format message for STM32 Blue Pill
+#	Model B NMEA format message parser for STM32 Blue Pill
 ############################################################
 
 ## Description

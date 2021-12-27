@@ -27,26 +27,8 @@ bool modelBEncodeSTM32::encodeGPS(char const* _buf)
         if(valid)
         {
             char *tok = strtok(sntc,"$,"); //capture header
-/*
-            if(strcmp(tok,"GPGGA") == 0)
-            {
-                GPGGAThread(tok);
-            }
-            else if(strcmp(tok,"GPRMC") == 0)
-            {
-                GPRMCThread(tok);
-            }
-            else if(strcmp(tok,"GPGLL") == 0)
-            {
-            	GPGLLThread(tok);
-            }
-            else if(strcmp(tok,"OCRC1") == 0)
-            {
-                OCRC1Thread(tok);
-            }
-*/
 
-		if(strcmp(tok,"GPGLL") == 0)
+            if(strcmp(tok,"GPGLL") == 0)
             {
             	GPGLLThread(tok);
             }
@@ -74,12 +56,14 @@ String modelBEncodeSTM32::getHeader(void)
 /***********************************
    from GPS
  ***********************************/
+
+
 /***********************************
-  GPGGA
-***********************************/
-void modelBEncodeSTM32::GPGGAThread(char *tok)
+   GPGLL
+ ***********************************/
+ void modelBEncodeSTM32::GPGLLThread(char *tok)
 {
-    memset(GPGGA.parameter,0,sizeof GPGGA.parameter);
+    memset(GPGLL.parameter,0,sizeof GPGLL.parameter);
     //point to header
     encode_header_ptr_stm = tok;
     //capture parameter
@@ -87,22 +71,27 @@ void modelBEncodeSTM32::GPGGAThread(char *tok)
     do
     {
         tok = strtok(NULL,",*");
-        GPGGA.parameter[count] = tok;
+
+        uint8_t i = 0;
+        while(tok[i] != 0)
+        {
+            GPGLL.parameter[count][i] = tok[i];
+            i++;
+        }
+        GPGLL.parameter[count][i] = '\0';
         count++;
-    }while(count<GPGGA.size);
+    }while(count<GPGLL.size);
 
-    UTCTime = String(GPGGA.parameter[0]);
-    Lat = String(GPGGA.parameter[1]);
-    NSInd = String(GPGGA.parameter[2]);
-    Long = String(GPGGA.parameter[3]);
-    EWInd = String(GPGGA.parameter[4]);
+    //verify & store value
+    Lat = verifyLat(GPGLL.parameter[0]);
+    NSInd = String(GPGLL.parameter[1]);
+    Long = verifyLong(GPGLL.parameter[2]);
+    EWInd = String(GPGLL.parameter[3]);
+    UTCTime = String(GPGLL.parameter[4]);
+    Status = String(GPGLL.parameter[5]);
 
 }
 
-String modelBEncodeSTM32::getUtcTime(void)
-{
-	return UTCTime;
-}
 String modelBEncodeSTM32::getLat(void)
 {
 	return Lat;
@@ -119,116 +108,15 @@ String modelBEncodeSTM32::getEWInd(void)
 {
 	return EWInd;
 }
-String modelBEncodeSTM32::getPosFix(void)
+String modelBEncodeSTM32::getUtcTime(void)
 {
-	return GPGGA.parameter[5];
+	return UTCTime;
 }
-String modelBEncodeSTM32::getSatellites(void)
-{
-	return GPGGA.parameter[6];
-}
-String modelBEncodeSTM32::getHDOP(void)
-{
-	return GPGGA.parameter[7];
-}
-String modelBEncodeSTM32::getMSLAlt(void)
-{
-	return GPGGA.parameter[8];
-}
-String modelBEncodeSTM32::getUnitMSL(void)
-{
-	return GPGGA.parameter[9];
-}
-String modelBEncodeSTM32::getGeoidSep(void)
-{
-	return GPGGA.parameter[10];
-}
-String modelBEncodeSTM32::getUnitGeoid(void)
-{
-	return GPGGA.parameter[11];
-}
-String modelBEncodeSTM32::getAgeDiffCorr(void)
-{
-	return GPGGA.parameter[12];
-}
-String modelBEncodeSTM32::getDiffRefSta(void)
-{
-	return GPGGA.parameter[13];
-}
-
-
-/***********************************
-   GPRMC
- ***********************************/
-void modelBEncodeSTM32::GPRMCThread(char *tok)
-{
-     memset(GPRMC.parameter,0,sizeof GPRMC.parameter);
-     //point to header
-     encode_header_ptr_stm = tok;
-     //capture parameter
-     uint8_t count=0;
-     do
-     {
-         tok = strtok(NULL,",*");
-         GPRMC.parameter[count] = tok;
-         count++;
-     }while(count<GPRMC.size);
-
-     UTCTime = String(GPRMC.parameter[0]);
-     Lat = String(GPRMC.parameter[2]);
-     NSInd = String(GPRMC.parameter[3]);
-     Long = String(GPRMC.parameter[4]);
-     EWInd = String(GPRMC.parameter[5]);
-     Status = String(GPRMC.parameter[1]);
-}
-
 String modelBEncodeSTM32::getStatus(void){
 	return Status;
 }
-String modelBEncodeSTM32::getSpdOGnd(void){
-	return String(GPRMC.parameter[6]);
-}
-String modelBEncodeSTM32::getCourOGnd(void){
-	return String(GPRMC.parameter[7]);
-}
-String modelBEncodeSTM32::getDate(void){
-	return String(GPRMC.parameter[8]);
-}
-String modelBEncodeSTM32::getMagnetVar(void){
-	return String(GPRMC.parameter[9]);
-}
-String modelBEncodeSTM32::getMode(void){
-	return String(GPRMC.parameter[10]);
-}
 
-/***********************************
-   GPGLL
- ***********************************/
- void modelBEncodeSTM32::GPGLLThread(char *tok)
-{
-    memset(GPGLL.parameter,0,sizeof GPGLL.parameter);
-    //point to header
-    encode_header_ptr_stm = tok;
-    //capture parameter
-    uint8_t count=0;
-    do
-    {
-        tok = strtok(NULL,",*");
-        GPGLL.parameter[count] = tok;
-        count++;
-    }while(count<GPGLL.size);
 
-    //verify & store value
-    Lat = verifyLat(GPGLL.parameter[0]);
-    //Lat = String(GPGLL.parameter[0]);
-    NSInd = String(GPGLL.parameter[1]);
-    Long = verifyLong(GPGLL.parameter[2]);
-    //Long = String(GPGLL.parameter[2]);
-    EWInd = String(GPGLL.parameter[3]);
-    UTCTime = String(GPGLL.parameter[4]);
-    Status = String(GPGLL.parameter[5]);
-
-}
 
 /***********************************
    for verify
@@ -260,23 +148,6 @@ String modelBEncodeSTM32::verifyLat(char *tok)
         {
         return Lat;
     }
-// 	uint8_t size_ = getParameterSize(tok); //get size first
-// 	bool verify = false;
-// 	for(uint8_t i=0; i< size_; i++) //verify tok is digit or '.'
-// 	{
-// 		if(isDigit(tok[i]) || (tok[i] == '.'))
-// 			verify = true;
-// 		else
-// 		{
-// 			verify = false;
-// 			break;
-// 		}
-// 	}
-
-// 	if(verify)
-// 		return String(tok);
-// 	else
-// 	 return Lat;
  }
 
 
@@ -293,7 +164,6 @@ String modelBEncodeSTM32::verifyLat(char *tok)
         {
         return Long;
     }
-
  }
 /***********************************
    from OpenCR
@@ -333,7 +203,14 @@ void modelBEncodeSTM32::OCRC1Thread(char *tok)
     do
     {
         tok = strtok(NULL,",*");
-        OCRC1.parameter[count] = tok;
+
+        uint8_t i = 0;
+        while(tok[i] != 0)
+        {
+            OCRC1.parameter[count][i] = tok[i];
+            i++;
+        }
+        OCRC1.parameter[count][i] = '\0';
         count++;
     }while(count<OCRC1.size);
 }
